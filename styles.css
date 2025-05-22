@@ -18,9 +18,11 @@ h2 {
 }
 
 .hero-section {
+margin: 0 8vw;
   height: 50vh;
   display: flex;
-  align-items: stretch; /* Children fill the height */
+  justify-content: center;
+  align-items: center; /* Children fill the height */
   margin-bottom: 1rem;
   box-sizing: border-box;
   overflow: hidden;
@@ -32,7 +34,8 @@ h2 {
   align-items: center;
   justify-content: center;
   min-width: 0;
-  height: 100%; /* This is key! */
+  height: 100%;
+  margin-right: 1rem;
 }
 
 .hero-image {
