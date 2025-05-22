@@ -1,70 +1,77 @@
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 2rem;
-    background-color: #f4f4f4;
-    box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 2rem;
+  box-sizing: border-box;
+  color: #d9ca7e;
+}
+
+body,
+.video-wrapper {
+  background-color: #0b0d0c;
+}
+
+h2 {
+  font-family: "Mooli", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .section {
-    display: grid;
-    gap: 1rem;
-    align-items: stretch;
-    margin-bottom: 2rem;
-    width: 100%;
+  display: grid;
+  gap: 1rem;
+  align-items: stretch;
+  margin-bottom: 2rem;
+  width: 100%;
 }
 
 .section.cols-2-60-40 {
-    grid-template-columns: 3fr 2fr;
+  grid-template-columns: 3fr 2fr;
 }
 
 .section.cols-2-40-60 {
-    grid-template-columns: 2fr 3fr;
+  grid-template-columns: 2fr 3fr;
 }
 
 .section.cols-2 {
-    grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 
 .section.cols-3-50-25-25 {
-    grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
 }
 
 .section.cols-3-30-30-60 {
-    grid-template-columns: 1.5fr 1.5fr 3fr;
+  grid-template-columns: 1.5fr 1.5fr 3fr;
 }
 
-.video-section, .info-section {
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.video-section,
+.info-section {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .video-section {
-    flex: 0 1 60%;
+  flex: 0 1 60%;
 }
 
 .info-section {
-    flex: 1 1 40%;
+  flex: 1 1 40%;
 }
 
 .video-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-
-    border-radius: 8px;
-    background: #000;
-}
-
-.info-section {
-  
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border: 1px solid #d9ca7e;
+  border-radius: 8px;
 }
 
 .aspect-ratio-4-5 {
-    aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 5;
 }
 
 .video-embed {
@@ -82,25 +89,26 @@ body {
 }
 
 .video-description {
-    color: #fff;
-    font-size: 1.2rem;
+  color: #fff;
+  font-size: 1.2rem;
 }
 
 @media (max-width: 500px) {
-    .section {
-        grid-template-columns: 1fr !important;
-    }
-    .video-section, .info-section {
-        width: 100%;
-    }
+  .section {
+    grid-template-columns: 1fr !important;
+  }
+  .video-section,
+  .info-section {
+    width: 100%;
+  }
 }
 
 @media (max-width: 500px) {
-    .section {
-        flex-direction: column;
-        flex-wrap: wrap;
-    }
-    .sub-section {
-        width: 100%;
-    }
+  .section {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .sub-section {
+    width: 100%;
+  }
 }
