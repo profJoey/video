@@ -1,35 +1,59 @@
 document.addEventListener("DOMContentLoaded", function() {
-  const iframes = Array.from(document.querySelectorAll('iframe.video-embed'));
-  const players = iframes.map(iframe => new Vimeo.Player(iframe, {muted: true, loop: true}));
-  let currentPlayingIdx = 0; // Start with the first video playing
+  // Only select iframes with both video-embed and autoplay-video for autoplay logic
+  const autoplayIframes = Array.from(document.querySelectorAll('iframe.video-embed.autoplay-video'));
+  const allIframes = Array.from(document.querySelectorAll('iframe.video-embed'));
+  const players = allIframes.map(iframe => new Vimeo.Player(iframe, {muted: true, loop: true}));
+  let currentPlayingIdx = null;
 
-  // Play the first video on load
-  players[0].play().catch(() => {});
-  iframes[0].classList.add('in-view');
+  // Set initial opacity for all videos
+  allIframes.forEach(iframe => iframe.classList.remove('in-view'));
+
+  // If there are autoplay videos, play the first one on load
+  if (autoplayIframes.length > 0) {
+    const firstAutoplay = autoplayIframes[0];
+    const idx = allIframes.indexOf(firstAutoplay);
+    if (idx !== -1) {
+      players[idx].play().catch(() => {});
+      firstAutoplay.classList.add('in-view');
+      currentPlayingIdx = idx;
+    }
+  }
 
   function handleIntersect(entries) {
-    // Find any video at least 90% in view
+    // Only consider autoplay videos for autoplay logic
     let newIdx = currentPlayingIdx;
     entries.forEach(entry => {
-      if (entry.intersectionRatio >= 0.9) {
-        const idx = iframes.indexOf(entry.target);
+      if (entry.target.classList.contains('autoplay-video') && entry.intersectionRatio >= 0.9) {
+        const idx = allIframes.indexOf(entry.target);
         if (idx !== -1) newIdx = idx;
       }
     });
 
-    if (newIdx !== currentPlayingIdx) {
-      // Pause the old, play the new
-      players[currentPlayingIdx].pause();
-      iframes[currentPlayingIdx].classList.remove('in-view');
+    if (newIdx !== currentPlayingIdx && newIdx !== null) {
+      // Pause the old autoplay video
+      if (currentPlayingIdx !== null) {
+        players[currentPlayingIdx].pause();
+        allIframes[currentPlayingIdx].classList.remove('in-view');
+      }
+      // Play the new one
       players[newIdx].play().catch(() => {});
-      iframes[newIdx].classList.add('in-view');
+      allIframes[newIdx].classList.add('in-view');
       currentPlayingIdx = newIdx;
     }
+
+    // Opacity animation for all videos: in-view if at least 90% visible
+    entries.forEach(entry => {
+      if (entry.intersectionRatio >= 0.8) {
+        entry.target.classList.add('in-view');
+      } else {
+        entry.target.classList.remove('in-view');
+      }
+    });
   }
 
   const observer = new IntersectionObserver(handleIntersect, {
     threshold: Array.from({length: 101}, (_, i) => i / 100)
   });
 
-  iframes.forEach(iframe => observer.observe(iframe));
+  allIframes.forEach(iframe => observer.observe(iframe));
 });
