@@ -43,6 +43,12 @@ body {
   display: block;
   border: none;
   display: block;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.video-embed.in-view {
+  opacity: 1;
 }
 
 .video-description {
