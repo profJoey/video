@@ -100,6 +100,10 @@ h2 {
   grid-template-columns: 1.5fr 1.5fr 3fr;
 }
 
+.section.cols-3-60-30-30 {
+  grid-template-columns: 3fr 1.5fr 1.5fr;
+}
+
 .video-section,
 .info-section {
   min-width: 0;
