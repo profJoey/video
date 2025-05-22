@@ -18,7 +18,7 @@ h2 {
 }
 
 .hero-section {
-  height: 70vh;
+  height: 60vh;
   display: flex;
   align-items: stretch; /* Children fill the height */
   margin-bottom: 1rem;
