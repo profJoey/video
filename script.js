@@ -1,23 +1,41 @@
 const iframes = Array.from(document.querySelectorAll('iframe.video-embed'));
-const baseSrc = "https://player.vimeo.com/video/980835810?muted=1&loop=1";
-const autoplaySrc = "https://player.vimeo.com/video/980835810?autoplay=1&muted=1&loop=1";
+let currentAutoplay = null;
+let debounceTimer = null;
 
-function setAutoplay(iframe) {
-  iframes.forEach(el => {
-    // Only update if not already set
-    if (el === iframe && !el.src.includes('autoplay=1')) {
-      el.src = autoplaySrc;
-    } else if (el !== iframe && el.src.includes('autoplay=1')) {
-      el.src = baseSrc;
-    }
-  });
+// Helper to get base src and build autoplay src
+function getBaseSrc(iframe) {
+  return iframe.dataset.baseSrc || iframe.src.replace(/(&|\?)autoplay=1/, '');
+}
+function getAutoplaySrc(iframe) {
+  const base = getBaseSrc(iframe);
+  return base + (base.includes('?') ? '&' : '?') + 'autoplay=1';
 }
 
-// Use Intersection Observer to detect which iframe is most in view
-const observer = new IntersectionObserver((entries) => {
-  // Find the entry with the largest intersection ratio
+function setAutoplay(iframe) {
+  if (currentAutoplay === iframe) return;
+  iframes.forEach(el => {
+    if (el === iframe) {
+      if (!el.src.includes('autoplay=1')) el.src = getAutoplaySrc(el);
+    } else {
+      if (el.src.includes('autoplay=1')) el.src = getBaseSrc(el);
+    }
+  });
+  currentAutoplay = iframe;
+}
+
+// Debounce function
+function debounce(fn, delay) {
+  return function(...args) {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+// Intersection Observer callback
+const handleIntersect = debounce((entries) => {
+  // Find the entry with the largest intersection ratio above 0.5
   let maxEntry = null;
-  let maxRatio = 0;
+  let maxRatio = 0.5;
   entries.forEach(entry => {
     if (entry.intersectionRatio > maxRatio) {
       maxRatio = entry.intersectionRatio;
@@ -27,9 +45,10 @@ const observer = new IntersectionObserver((entries) => {
   if (maxEntry && maxEntry.isIntersecting) {
     setAutoplay(maxEntry.target);
   }
-}, {
-  threshold: Array.from({length: 101}, (_, i) => i / 100) // 0, 0.01, ..., 1
+}, 100);
+
+const observer = new IntersectionObserver(handleIntersect, {
+  threshold: Array.from({length: 101}, (_, i) => i / 100)
 });
 
-// Observe all iframes
 iframes.forEach(iframe => observer.observe(iframe));
