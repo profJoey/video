@@ -230,10 +230,7 @@ h2 {
   .sub-section {
     width: 100%;
   }
-}
-
-@media (max-width: 600px) {
-  :root {
+    :root {
     --logo-width: 80px;
     --logo-gap: 1rem;
   }
@@ -243,10 +240,7 @@ h2 {
   .logo-img {
     height: 36px;
   }
-}
-
-@media (max-width: 700px) {
-  .hero-section {
+    .hero-section {
     flex-direction: column;
     height: auto;
     min-height: 0;
