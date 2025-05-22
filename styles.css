@@ -18,7 +18,7 @@ h2 {
 }
 
 .hero-section {
-  height: 60vh;
+  height: 50vh;
   display: flex;
   align-items: stretch; /* Children fill the height */
   margin-bottom: 1rem;
@@ -246,6 +246,45 @@ h2 {
 }
 
 @media (max-width: 700px) {
+  .hero-section {
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+  }
+  .hero-content {
+    order: 1;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+  .hero-image-wrapper {
+    order: 2;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+  .hero-image {
+    max-width: 90vw;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+  .section {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .info-section {
+    order: 2 !important;
+  }
+  .video-section {
+    order: 1 !important;
+  }
   .logo-carousel {
     --logo-width: 80px;
     --logo-gap: 1rem;
