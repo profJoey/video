@@ -13,7 +13,7 @@ body,
 
 h2 {
   font-family: "Mooli", sans-serif;
-  font-weight: 400;
+  font-weight: 900;
   font-style: normal;
 }
 
@@ -56,7 +56,7 @@ h2 {
 }
 .hero-tagline {
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 100;
   margin: 0 0 1rem 0;
   color: #d9ca7e;
   font-family: "Mooli", sans-serif;
@@ -66,6 +66,10 @@ h2 {
   font-size: 1.1rem;
   color: #fff;
   margin: 0;
+}
+
+.hero-description span {
+    color: #d9ca7e;
 }
 
 .section {
